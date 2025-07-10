@@ -1,0 +1,24 @@
+/* Global */
+html, body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+main { max-width: 600px; margin: 0 auto; padding: 1rem; }
+h1 { text-align: center; color: #2196F3; }
+
+/* Form */
+form { display: flex; flex-direction: column; gap: 0.5rem; }
+input[type="file"], input[type="text"], button { padding: 0.5rem; font-size: 1rem; }
+button { background: #2196F3; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+button:disabled { opacity: 0.6; cursor: default; }
+#message { text-align: center; margin-top: 0.5rem; color: red; }
+
+/* Spinner */
+.spinner { border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: #2196F3; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0.5rem auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Gallery */
+#gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; }
+.photo { position: relative; background: #fff; border-radius: 4px; overflow: hidden; }
+.photo img { width: 100%; display: block; }
+.photo p { margin: 0; padding: 0.25rem; font-size: 0.875rem; text-align: center; word-break: break-word; }
+.photo.fade { opacity: 0; transition: opacity 10s linear; }
+
+a { display: block; text-align: center; margin-top: 1rem; color: #2196F3; text-decoration: none; }
