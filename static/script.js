@@ -56,7 +56,6 @@ if (document.getElementById('uploadForm')) {
         const age = (now - ts) / 1000;
         const div = document.createElement('div');
         div.className = 'photo';
-        if (age >= 5) div.classList.add('fade');
         const img = document.createElement('img');
         img.src = '/uploads/' + item.filename;
         const p = document.createElement('p');
@@ -64,6 +63,10 @@ if (document.getElementById('uploadForm')) {
         div.appendChild(img);
         div.appendChild(p);
         gallery.appendChild(div);
+        // Apply fade class after insertion to trigger transition
+        if (age >= 5) {
+          requestAnimationFrame(() => div.classList.add('fade'));
+        }
       });
     } catch (err) {
       console.error(err);

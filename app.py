@@ -2,7 +2,6 @@ import os
 import threading
 import time
 import json
-import imghdr
 import base64
 from datetime import datetime
 
@@ -108,13 +107,9 @@ def upload():
         return jsonify({'success': False, 'error': 'Kommentar zu lang'}), 400
     if not allowed_file(file.filename):
         return jsonify({'success': False, 'error': 'Ungültiger Dateityp'}), 400
-    # Validate image header
-    file.stream.seek(0)
-    header = file.stream.read(512)
-    file.stream.seek(0)
-    kind = imghdr.what(None, header)
     ext = file.filename.rsplit('.', 1)[-1].lower()
-    if kind not in ('jpeg', 'png') and ext != 'webp':
+    # Validate image mimetype
+    if file.mimetype not in ('image/jpeg', 'image/png', 'image/webp'):
         return jsonify({'success': False, 'error': 'Ungültige Bilddatei'}), 400
     timestamp = datetime.now().isoformat()
     filename = f"{timestamp}.{ext}"
@@ -134,8 +129,10 @@ def upload():
     save_data(data)
     return jsonify({'success': True})
 
+# Ensure upload folder is initialized and cleanup thread starts on import
+init_app()
+cleaner = threading.Thread(target=cleanup_task, daemon=True)
+cleaner.start()
+
 if __name__ == '__main__':
-    init_app()
-    cleaner = threading.Thread(target=cleanup_task, daemon=True)
-    cleaner.start()
     app.run(host='0.0.0.0', port=5000)
